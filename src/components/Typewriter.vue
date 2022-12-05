@@ -1,18 +1,18 @@
 <template>
   <div>
-    123
+    {{ text }}
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 
 interface TypewriterProps {
   words: string[];
   typeSpeed?: number;
   deleteSpeed?: number;
   delaySpeed?: number;
-  loop?: number | boolean;
+  loop?: number;
   cursor?: boolean;
   cursorBlinking?: boolean;
 }
@@ -21,79 +21,103 @@ const props = withDefaults(defineProps<TypewriterProps>(), {
   typeSpeed: 80,
   deleteSpeed: 50,
   delaySpeed: 1500,
-  loop: true,
+  loop: 0,
   cursor: false,
   cursorBlinking: false,
 });
 
-const data = ref<string[]>(["React", "Vue", "Angular"]);
-const el = ref<HTMLElement>();
+const loops = ref<number>(0);
+const isDone = ref<boolean>(false);
+const isDelete = ref<boolean>(false);
+const isType = ref<boolean>(false);
+const isDelay = ref<boolean>(false);
 
-onMounted(() => {
+const text = ref<string>("");
+const count = ref<number>(0);
+const speed = ref<number>(props.typeSpeed);
+
+const handleTyping = () => {
+  const index = count.value % props.words.length;
+  console.log(index);
+  const fullWord = props.words[index];
+
+  if (!isDelete.value) {
+    typeWord(fullWord);
+    isType.value = true;
+  
+    if (text.value === fullWord) {
+      delay(props.delaySpeed);
+      isType.value = false;
+      isDelay.value = true;
+
+      setTimeout(() => {
+        isDelay.value = false;
+        isDelete.value = true;
+      }, props.delaySpeed);
+
+      if (props.loop > 0) {
+        loops.value += 1;
+        if (loops.value / props.words.length === props.loop) {
+          isDelay.value = false;
+          isDone.value = true;
+        }
+      }
+    } 
+  } else {
+    deleteWord(fullWord, props.deleteSpeed);
+    if (text.value === "") {
+      isDelete.value = false;
+      addCount();
+    }
+  }
+}
+
+const typeWord = (fullWord: string) => {
+  text.value = fullWord.substring(0, text.value.length + 1);
+  speed.value = props.typeSpeed;
+};
+
+const delay = (delaySpeed: number) => {
+  speed.value = delaySpeed;
+};
+
+const deleteWord = (fullWord: string, deleteSpeed: number) => {
+  text.value = fullWord.substring(0, text.value.length - 1);
+  speed.value = deleteSpeed;
+};
+
+const addCount = () => {
+  count.value += 1;
+};
+
+if (isType.value) {
+  //if (onType)
+}
+
+if (isDelete.value) {
+
+}
+
+if (isDelay.value) {
+
+}
+
+watchEffect(() => {
+  const typing = setTimeout(handleTyping, speed.value);
+  console.log(text.value);
+  if (isDone.value) {
+    clearTimeout(typing);
+  }
 });
 
-const init = () => {
-  if (!el.value) throw new Error("Can't initialize typewriter");
-
-  const innerHTML = el.value.innerHTML;
-  const innerText = el.value.innerText;
-
-  el.value.innerHTML =
-    innerHTML.trim() === innerText ? `<span>${innerText}</span>` : innerHTML;
-
-  typewriter(innerHTML);
-
-  if (props.words.length) {
-    setTimeout(() => {
-      startReplacing();
-    }, props.delaySpeed);
+watchEffect(() => {
+  if (isDone.value) {
+    //
   }
-};
-
-const typewriter = (str: string) => {
-  return new Promise<void>((resolve) => {
-    if (!el.value) throw new Error("Can't initialize typewriter");
-
-    el.value.innerHTML = "";
-
-    const func = (index: number) => {
-      const current = str[index];
-      index = current === "<" ? str.indexOf(">", 1) + 1 : index++;
-      el.value.innerHTML = str.substring(0, index);
-
-      if (index < str.length - 1) {
-        setTimeout(func, props.typeSpeed, index);
-        return;
-      }
-      resolve();
-    };
-    func(0);
-  });
-};
-
-const removeString = (start: number, end: number) => {
-  return new Promise<void>((resolve) => {
-    const elCopy = el.value;
-    if (!elCopy) throw new Error();
-
-    const func = (index: number) => {
-      elCopy.innerHTML = elCopy?.innerHTML.slice(0, index);
-      index--;
-      if (start <= index) {
-        setTimeout(func, props.deleteSpeed, index);
-        return;
-      }
-      resolve();
-    };
-    func(end - 1);
-  });
-}
-
-const startReplacing = () => {
-}
-
+});
 </script>
 
 <style scoped>
+
 
 </style>
