@@ -1,6 +1,6 @@
 <template>
   <span
-    style="{{ color: 'white'}}"
+    :style="{ color: props.cursorColor }"
     :class="props.cursorBlinking ? 'blinkingCursor blinking' : 'blinkingCursor'"
   >
     {{ props.cursorStyle }}
@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-
 export interface CursorProps {
   /**Enable cursor bliking animation */
   cursorBlinking: boolean;

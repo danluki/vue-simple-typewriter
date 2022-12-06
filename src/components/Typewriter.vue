@@ -46,9 +46,9 @@ const props = withDefaults(defineProps<Props>(), {
   deleteSpeed: 50,
   delaySpeed: 1500,
   loop: 0,
-  cursor: false,
-  cursorBlinking: false,
-  cursorColor: "'#FFFFFF'",
+  cursor: true,
+  cursorBlinking: true,
+  cursorColor: "'#000000'",
   cursorStyle: "_",
 });
 
