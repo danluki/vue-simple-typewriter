@@ -1,20 +1,38 @@
 <template>
-  <div>
+  <span>
     {{ text }}
-  </div>
+    <Cursor
+      :cursor-blinking="true"
+      :cursor-color="'#000000'"
+      :cursor-style="'|'"
+    />
+  </span>
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect } from "vue";
+import Cursor from "./Cursor.vue";
 
 interface TypewriterProps {
+  /**Array of words */
   words: string[];
+  /**Character typing speed in Milliseconds*/
   typeSpeed?: number;
+  /**Deleting speed in Milliseconds*/
   deleteSpeed?: number;
+  /**Delay between words in Milliseconds*/
   delaySpeed?: number;
+  /**How many times to run. 0 to run infinitely*/
   loop?: number;
+  /**Is cursor needs to be shown? */
   cursor?: boolean;
-  cursorBlinking?: boolean;
+  onLoopDone?: () => void;
+  /**Callback that is triggered while typing with `typed` words count passed */
+  onType?: (count: number) => void;
+  /**Callback that is triggered while deleting*/
+  onDelete?: () => void;
+  /**Callback that is triggered on typing delay*/
+  onDelay?: () => void;
 }
 
 const props = withDefaults(defineProps<TypewriterProps>(), {
@@ -44,7 +62,7 @@ const handleTyping = () => {
   if (!isDelete.value) {
     typeWord(fullWord);
     isType.value = true;
-  
+
     if (text.value === fullWord) {
       delay(props.delaySpeed);
       isType.value = false;
@@ -62,7 +80,7 @@ const handleTyping = () => {
           isDone.value = true;
         }
       }
-    } 
+    }
   } else {
     deleteWord(fullWord, props.deleteSpeed);
     if (text.value === "") {
@@ -70,7 +88,7 @@ const handleTyping = () => {
       addCount();
     }
   }
-}
+};
 
 const typeWord = (fullWord: string) => {
   text.value = fullWord.substring(0, text.value.length + 1);
@@ -91,15 +109,21 @@ const addCount = () => {
 };
 
 if (isType.value) {
-  //if (onType)
+  if (props.onType) {
+    props.onType(count.value);
+  }
 }
 
 if (isDelete.value) {
-
+  if (props.onDelete) {
+    props.onDelete();
+  }
 }
 
 if (isDelay.value) {
-
+  if (props.onDelay) {
+    props.onDelay();
+  }
 }
 
 watchEffect(() => {
@@ -114,10 +138,13 @@ watchEffect(() => {
   if (isDone.value) {
     //
   }
+
+  if (!props.onLoopDone) return;
+
+  if (isDone.value) {
+    props.onLoopDone();
+  }
 });
 </script>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>
