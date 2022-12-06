@@ -2,9 +2,9 @@
   <span>
     {{ text }}
     <Cursor
-      :cursor-blinking="true"
-      :cursor-color="'#000000'"
-      :cursor-style="'|'"
+      :cursor-blinking="props.cursorBlinking"
+      :cursor-color="props.cursorColor"
+      :cursor-style="props.cursorStyle"
     />
   </span>
 </template>
@@ -13,7 +13,7 @@
 import { ref, watchEffect } from "vue";
 import Cursor from "./Cursor.vue";
 
-interface TypewriterProps {
+interface Props {
   /**Array of words */
   words: string[];
   /**Character typing speed in Milliseconds*/
@@ -33,30 +33,37 @@ interface TypewriterProps {
   onDelete?: () => void;
   /**Callback that is triggered on typing delay*/
   onDelay?: () => void;
+  /**Enable cursor bliking animation */
+  cursorBlinking?: boolean;
+  /**Change cursor color */
+  cursorColor?: string;
+  /**Change cursor style */
+  cursorStyle?: string;
 }
 
-const props = withDefaults(defineProps<TypewriterProps>(), {
+const props = withDefaults(defineProps<Props>(), {
   typeSpeed: 80,
   deleteSpeed: 50,
   delaySpeed: 1500,
   loop: 0,
   cursor: false,
   cursorBlinking: false,
+  cursorColor: "'#FFFFFF'",
+  cursorStyle: "_",
 });
 
-const loops = ref<number>(0);
-const isDone = ref<boolean>(false);
-const isDelete = ref<boolean>(false);
-const isType = ref<boolean>(false);
-const isDelay = ref<boolean>(false);
+const loops = ref(0);
+const isDone = ref(false);
+const isDelete = ref(false);
+const isType = ref(false);
+const isDelay = ref(false);
 
-const text = ref<string>("");
-const count = ref<number>(0);
-const speed = ref<number>(props.typeSpeed);
+const text = ref("");
+const count = ref(0);
+const speed = ref(props.typeSpeed);
 
 const handleTyping = () => {
   const index = count.value % props.words.length;
-  console.log(index);
   const fullWord = props.words[index];
 
   if (!isDelete.value) {
@@ -88,6 +95,23 @@ const handleTyping = () => {
       addCount();
     }
   }
+  if (isType.value) {
+    if (props.onType) {
+      props.onType(count.value);
+    }
+  }
+
+  if (isDelete.value) {
+    if (props.onDelete) {
+      props.onDelete();
+    }
+  }
+
+  if (isDelay.value) {
+    if (props.onDelay) {
+      props.onDelay();
+    }
+  }
 };
 
 const typeWord = (fullWord: string) => {
@@ -108,39 +132,13 @@ const addCount = () => {
   count.value += 1;
 };
 
-if (isType.value) {
-  if (props.onType) {
-    props.onType(count.value);
-  }
-}
-
-if (isDelete.value) {
-  if (props.onDelete) {
-    props.onDelete();
-  }
-}
-
-if (isDelay.value) {
-  if (props.onDelay) {
-    props.onDelay();
-  }
-}
-
 watchEffect(() => {
-  const typing = setTimeout(handleTyping, speed.value);
-  console.log(text.value);
+  const typing = setTimeout(handleTyping, speed.value, text.value);
   if (isDone.value) {
     clearTimeout(typing);
   }
-});
-
-watchEffect(() => {
-  if (isDone.value) {
-    //
-  }
 
   if (!props.onLoopDone) return;
-
   if (isDone.value) {
     props.onLoopDone();
   }
