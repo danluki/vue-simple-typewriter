@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-// import Typewriter from "./components/Typewriter.vue";
-//import { Typewriter } from "./dist/types/compone";
 import { Typewriter } from "vue-simple-typewriter";
 import 'vue-simple-typewriter/dist/style.css';
 const data = ref<string[]>(["Eat", "Sleep", "Code"]);

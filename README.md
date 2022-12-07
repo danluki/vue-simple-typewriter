@@ -45,6 +45,33 @@ const data = ref<string[]>(["Eat", "Sleep", "Code"]);
 />
 ```
 
+## Troubleshooting
+If you cursor is not blinking, or always shown try to add this css to you project
+```css
+.blinkingCursor {
+  position: relative;
+  font: inherit;
+  line-height: inherit;
+  left: 3px;
+  top: 0;
+}
+
+.blinking {
+  animation-name: blink;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+```
 ### Component Props
 
 | Prop             |       Type        | Options  | Description                                                                                |      Default       |
