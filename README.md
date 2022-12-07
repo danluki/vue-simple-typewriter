@@ -5,7 +5,7 @@
 > A simple vue component for adding a nice typewriter effect to your project
 
 <p align="left">
-    <img src="animation.gif" alt="screenshot">
+    <img src="./animation.gif" alt="screenshot">
 </p>
 
 ## Install

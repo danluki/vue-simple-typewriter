@@ -2,7 +2,11 @@
   "name": "vue-simple-typewriter",
   "description": "A simple typewriter animation component for vue3",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.5",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danilluk1/vue-simple-typewriter"
+  },
   "files": [
     "dist",
     "src"
