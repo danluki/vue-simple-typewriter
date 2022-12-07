@@ -90,7 +90,7 @@ If you cursor is not blinking, or always shown try to add this css to you projec
 | `onDelete`       |     function      | Optional | Callback function that is triggered while deleting                                         |        `-`         |
 ---
 
-### Usage Exammple
+### Usage Example
 
 ```vue
 <script setup lang="ts">
@@ -149,6 +149,15 @@ const onType = () => {
 }
 </style>
 ```
+---
+### Contributing
+This project is developing by enthusiasm, and our coding addiction. This is Open source project, and we will be fine to receive your help. You can take any task you want, just make fork on GitHub. There is a list of issues, todos, call it like you want:
+<ul>
+<li>Adds hooks api(like in original component)</li>
+<li>Fix bug with CSS(need to make importing css unnecessary)</li>
+<li>Any bug fix, or new features development</li>
+<li>Create right index.d.ts</li>
+</ul> 
 ---
 ### License
 
