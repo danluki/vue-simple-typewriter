@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "files": [
     "dist",
-    "file"
+    "src"
   ],
   "types": "./dist/types/index.d.ts",
   "module": "./dist/vue-simple-typewriter.es.js",

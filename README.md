@@ -5,7 +5,7 @@
 > A simple vue component for adding a nice typewriter effect to your project
 
 <p align="left">
-    <img src="./public/animation.gif" alt="screenshot">
+    <img src="animation.gif" alt="screenshot">
 </p>
 
 ## Install
@@ -68,7 +68,9 @@ const data = ref<string[]>(["Eat", "Sleep", "Code"]);
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";
+
 import { Typewriter } from "vue-simple-typewriter";
+import 'vue-simple-typewriter/dist/style.css';
 
 const data = ref<string[]>(["Eat", "Sleep", "Code"]);
 

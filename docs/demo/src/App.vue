@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import Typewriter from "./components/Typewriter.vue";
+// import Typewriter from "./components/Typewriter.vue";
 //import { Typewriter } from "./dist/types/compone";
-//import { Typewriter } from "vue-simple-typewriter";
+import { Typewriter } from "vue-simple-typewriter";
+import 'vue-simple-typewriter/dist/style.css';
 const data = ref<string[]>(["Eat", "Sleep", "Code"]);
 
 const onLoopDone = () => {
@@ -29,7 +30,7 @@ const onType = () => {
       :delete-speed="80"
       :type-speed="80"
       :cursor="true"
-      :cursor-blinking="true"
+      :cursor-blinking="false"
       :cursor-style="'|'"
       :cursor-color="'#000000'"
       :on-loop-done="onLoopDone"

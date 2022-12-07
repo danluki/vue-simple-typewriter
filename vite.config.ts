@@ -27,7 +27,7 @@ export default defineConfig({
       fileName: (format) => `vue-simple-typewriter.${format}.js`,
     },
     rollupOptions: {
-      external: ["vue", /primevue\/.+/],
+      external: ["vue"],
       output: {
         globals: {
           vue: "Vue",
@@ -36,6 +36,5 @@ export default defineConfig({
     },
     emptyOutDir: false,
   },
-
   plugins: [vue()],
 });
