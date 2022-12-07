@@ -2,6 +2,7 @@
   <span>
     {{ text }}
     <Cursor
+      v-if="props.cursor"
       :cursor-blinking="props.cursorBlinking"
       :cursor-color="props.cursorColor"
       :cursor-style="props.cursorStyle"
@@ -13,7 +14,7 @@
 import { ref, watchEffect } from "vue";
 import Cursor from "./Cursor.vue";
 
-interface Props {
+export interface Props {
   /**Array of words */
   words: string[];
   /**Character typing speed in Milliseconds*/
@@ -33,7 +34,7 @@ interface Props {
   onDelete?: () => void;
   /**Callback that is triggered on typing delay*/
   onDelay?: () => void;
-  /**Enable cursor bliking animation */
+  /**Enable cursor blinking animation */
   cursorBlinking?: boolean;
   /**Change cursor color */
   cursorColor?: string;
@@ -46,7 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
   deleteSpeed: 50,
   delaySpeed: 1500,
   loop: 0,
-  cursor: true,
+  cursor: false,
   cursorBlinking: true,
   cursorColor: "'#000000'",
   cursorStyle: "_",

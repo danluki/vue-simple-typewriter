@@ -68,7 +68,7 @@ const data = ref<string[]>(["Eat", "Sleep", "Code"]);
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";
-import Typewriter from "vue-simple-typewriter";
+import { Typewriter } from "vue-simple-typewriter";
 
 const data = ref<string[]>(["Eat", "Sleep", "Code"]);
 

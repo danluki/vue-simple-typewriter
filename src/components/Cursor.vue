@@ -1,7 +1,10 @@
 <template>
   <span
     :style="{ color: props.cursorColor }"
-    :class="props.cursorBlinking ? 'blinkingCursor blinking' : 'blinkingCursor'"
+    class="blinkingCursor"
+    :class="{
+      blinking: props.cursorBlinking,
+    }"
   >
     {{ props.cursorStyle }}
   </span>

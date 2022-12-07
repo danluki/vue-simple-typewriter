@@ -16,7 +16,6 @@
 import path from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import dts from "vite-plugin-dts";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,16 +23,19 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/components/index.ts"),
       name: "vue-simple-typewriter",
+      formats: ["es"],
       fileName: (format) => `vue-simple-typewriter.${format}.js`,
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ["vue", /primevue\/.+/],
       output: {
         globals: {
           vue: "Vue",
         },
       },
     },
+    emptyOutDir: false,
   },
-  plugins: [vue(), dts({ insertTypesEntry: true })],
+
+  plugins: [vue()],
 });

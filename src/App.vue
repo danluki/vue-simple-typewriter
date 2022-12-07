@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Typewriter from "./components/Typewriter.vue";
-// import Typewriter from "vue-simple-typewriter";
+//import { Typewriter } from "./dist/types/compone";
+//import { Typewriter } from "vue-simple-typewriter";
 const data = ref<string[]>(["Eat", "Sleep", "Code"]);
 
 const onLoopDone = () => {
