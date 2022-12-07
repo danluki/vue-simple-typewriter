@@ -82,7 +82,7 @@ If you cursor is not blinking, or always shown try to add this css to you projec
 | `delaySpeed`     |      number       | Optional | Delay time between the words in Milliseconds                                               |       `1500`       |
 | `loop`           |      number       | Optional | Control how many times to run. `0` to run infinitely                                       |        `0`         |
 | `cursor`         |      boolean      | Optional | Show / Hide a cursor                                                                       |      `true`        |
-| `cursorStyle`    |     string        | Optional | Change the cursor style available if `cursor` is `enabled`                                 |        `\_`        |
+| `cursorStyle`    |     string        | Optional | Change the cursor style available if `cursor` is `enabled`                                 |        `_`        |
 | `cursorBlinking` |      boolean      | Optional | Enable cursor blinking animation                                                           |        `true`      |
 | `onLoopDone`     |     function      | Optional | Callback function that is triggered when loops are completed. available if `loop` is `> 0` |        `-`         |
 | `onType`         |     function      | Optional | Callback function that is triggered while typing with typed words `count` passed           |        `-`         |
@@ -159,6 +159,7 @@ This project is developing by enthusiasm, and our coding addiction. This is Open
 <li>Create right index.d.ts</li>
 </ul> 
 ---
+
 ### License
 
 MIT © [danluki](https://github.com/)
